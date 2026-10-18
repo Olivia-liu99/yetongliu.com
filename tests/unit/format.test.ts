@@ -25,10 +25,10 @@ test('inlineEmphasis', () => {
   expect(inlineEmphasis('5 * 3')).toBe('5 * 3');
 });
 
-test('interestsLine', () => {
-  expect(interestsLine(['Innovation', 'Technology diffusion and adoption', 'Organizational design']))
-    .toBe('Innovation, technology diffusion and adoption, organizational design');
-  expect(interestsLine(['Innovation', 'AI adoption'])).toBe('Innovation, AI adoption');
+test('interestsLine shows each interest exactly as typed', () => {
+  expect(interestsLine(['Innovation', 'Technology Diffusion and Adoption', 'Bayesian persuasion']))
+    .toBe('Innovation, Technology Diffusion and Adoption, Bayesian persuasion');
+  expect(interestsLine(['Innovation', 'technology diffusion and adoption'])).toBe('Innovation, technology diffusion and adoption');
 });
 
 test('monthYear uses Toronto time', () => {

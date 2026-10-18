@@ -37,11 +37,9 @@ export function inlineEmphasis(text: string): string {
   return escaped.replace(/\*([^*\s][^*]*?)\*/g, '<em>$1</em>');
 }
 
-/** "Innovation, technology diffusion and adoption" — keeps acronyms like "AI" capitalized. */
+/** The research interests on one line, each shown exactly as typed. */
 export function interestsLine(items: string[]): string {
-  return items
-    .map((item, i) => (i > 0 && /^[A-Z][a-z]/.test(item) ? item[0].toLowerCase() + item.slice(1) : item))
-    .join(', ');
+  return items.join(', ');
 }
 
 /** "October 2026", in Toronto time unless told otherwise. */

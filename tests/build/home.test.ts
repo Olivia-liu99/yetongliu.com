@@ -52,7 +52,8 @@ test('market home page', () => {
     .toEqual([['Ada Reference', 'Professor, Example University'], ['Ben Reference', 'Associate Professor, Sample University']]);
   expect(d.querySelector('picture')).toBeNull();
   expect(d.querySelector('.intro--full')).toBeTruthy();
-  expect(d.querySelectorAll('.profile-links a').map(linkText)).toEqual(['candidate@example.edu', 'CV', 'Google Scholar']);
+  expect(d.querySelectorAll('.profile-links a').map(linkText))
+    .toEqual(['a.very.long.fixture.address.for.overflow.testing@example-university.edu', 'CV', 'Google Scholar']);
   expect(d.querySelector('header [lang="zh"]')?.text.trim()).toBe('测试');
 });
 

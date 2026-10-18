@@ -28,9 +28,10 @@ def test_fits_the_screen_without_errors(page: Page, base, path, width, browser_n
     page.set_viewport_size({"width": width, "height": 900})
     page.goto(f"{url}{path}")
     page.wait_for_load_state("networkidle")
+    page.evaluate("document.querySelectorAll('details').forEach((d) => { d.open = true; })")
     assert page.evaluate("document.documentElement.scrollWidth <= document.documentElement.clientWidth"), "no horizontal scroll"
     assert errors == [], f"console errors: {errors}"
-    page.screenshot(path=f"test-results/screens/{browser_name}-{name}-{PAGES[path]}-{width}.png", full_page=True)
+    page.screenshot(path=f"dist-test/screens/{browser_name}-{name}-{PAGES[path]}-{width}.png", full_page=True)
 
 
 def test_skip_link_is_first_and_visibly_focused(page: Page, base_url, browser_name):

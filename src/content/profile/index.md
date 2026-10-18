@@ -4,7 +4,7 @@ title: "PhD Student in Strategic Management"
 affiliation: "Rotman School of Management, University of Toronto"
 email: "yetong.liu@mail.utoronto.ca"
 description: "Yetong Liu is a PhD student in Strategic Management at the Rotman School of Management, University of Toronto, studying innovation and technology adoption."
-interests: ["Innovation", "Technology diffusion and adoption", "Artificial intelligence"]
+interests: ["Innovation", "technology diffusion and adoption", "artificial intelligence"]
 photo: "./photo.jpg"
 links:
   scholar: "https://scholar.google.com/citations?user=2wplHcMAAAAJ"

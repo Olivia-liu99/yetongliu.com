@@ -1,12 +1,13 @@
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
+import { SITE_PATH_OR_HTTPS } from './lib/checks';
 
 // Tests point this at fixture content; the real site uses src/content.
 const CONTENT_DIR = process.env.SITE_CONTENT_DIR ?? './src/content';
 
 // A file on this site ("/papers/x.pdf") or a full https:// address.
-const sitePathOrUrl = z.string().regex(/^(\/|https:\/\/)/, 'must start with "/" (a file on this site) or "https://"');
+const sitePathOrUrl = z.string().regex(SITE_PATH_OR_HTTPS, 'must start with "/" (a file on this site) or "https://"');
 
 const papers = defineCollection({
   loader: glob({ pattern: '*.md', base: `${CONTENT_DIR}/papers` }),

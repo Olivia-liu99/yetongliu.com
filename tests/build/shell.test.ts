@@ -1,6 +1,19 @@
 import { expect, test } from 'vitest';
 import { monthYear } from '../../src/lib/format';
-import { allHtml, exists, html, read } from './helpers';
+import { allHtml, buildLog, exists, html, read } from './helpers';
+
+test('without a CV, every CV link is hidden and the build says so', () => {
+  expect(html('nocv', '404.html').querySelectorAll('nav a').map((a) => a.text.trim())).toEqual(['Research']);
+  for (const { path, root } of allHtml('nocv')) {
+    expect(root.querySelectorAll('a[href="/cv.pdf"]'), path).toHaveLength(0);
+  }
+  expect(buildLog('nocv')).toContain('[site] No public/cv.pdf yet, so CV links are hidden.');
+});
+
+test('a link to a file the site does not have stops the build', () => {
+  expect(buildLog('badlink')).toContain(
+    'papers/broken.md: links.pdf is "/papers/missing.pdf", but there is no file public/papers/missing.pdf');
+});
 
 test('404 page uses the shell', () => {
   const d = html('default', '404.html');

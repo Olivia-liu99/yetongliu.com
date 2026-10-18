@@ -16,11 +16,18 @@ Write text values in double quotes, like `title: "My Paper"`. Titles often conta
 
 ## 2. Preview on your computer
 
-1. Open this folder in VS Code and open a terminal (Terminal → New Terminal).
-2. The first time on a computer, run `npm install`.
-3. Run `npm run dev`.
-4. Open http://localhost:4321. The page refreshes as you save files.
-5. Press Ctrl+C in the terminal to stop.
+**The first time on a computer:**
+1. Install Node.js, the "LTS" version, from https://nodejs.org.
+2. Open this folder in VS Code and open a terminal (Terminal → New Terminal).
+3. Run `sh scripts/dropbox-ignore.sh`. This tells Dropbox not to sync the thousands of tool files the next step downloads.
+4. Run `npm install`.
+
+If you ever delete the `node_modules` folder, for example to fix an install problem, run `sh scripts/dropbox-ignore.sh` again before `npm install`.
+
+**Every time:**
+1. Run `npm run dev`.
+2. Open http://localhost:4321. The page refreshes as you save files.
+3. Press Ctrl+C in the terminal to stop.
 
 ## 3. Publish a change
 
@@ -103,6 +110,8 @@ links:
   scholar: "https://scholar.google.com/citations?user=YOUR_ID"
 ```
 
+Your research interests (`interests`) appear on one line, separated by commas, exactly as you type them, so type them the way you want them shown.
+
 The available links are `scholar`, `linkedin`, `orcid`, and `ssrn`. A link you leave out simply doesn't appear. `description` is the one-sentence summary that search engines show. Keep it under 160 characters.
 
 ## 8. Job market mode
@@ -142,6 +151,20 @@ If a file has a mistake, the site keeps showing the previous version and GitHub 
 ## 10. Your domain
 
 yetongliu.com is registered at Porkbun. The first renewal date is 2027-10-18, and auto-renew is on. Keep the payment method on your Porkbun account current, because a lapsed domain would take the site offline.
+
+### How the domain is connected
+
+If the site ever stops loading at yetongliu.com, check these four places.
+
+1. **GitHub verified domain.** On github.com: profile picture → **Settings** → **Pages**. `yetongliu.com` should be listed as verified. Verification uses a `TXT` record at Porkbun with host `_github-pages-challenge-Olivia-liu99`.
+2. **Porkbun DNS records.** Domain Management → yetongliu.com → **DNS**:
+   - Four `A` records with an empty host: `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
+   - Four `AAAA` records with an empty host: `2606:50c0:8000::153`, `2606:50c0:8001::153`, `2606:50c0:8002::153`, `2606:50c0:8003::153`
+   - One `CNAME` record with host `www` and answer `olivia-liu99.github.io`
+3. **Repository Pages settings.** In the `yetongliu.com` repository: **Settings** → **Pages**. **Source** should be **GitHub Actions**, **Custom domain** should be `yetongliu.com`, and **Enforce HTTPS** should be ticked.
+4. **The latest deploy.** The repository's **Actions** tab should show a green ✓ on the most recent run.
+
+If you change your GitHub username, update the `www` record's answer and the `TXT` record's host to the new name, then re-verify the domain on GitHub.
 
 ---
 

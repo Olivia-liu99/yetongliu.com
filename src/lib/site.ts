@@ -3,7 +3,7 @@
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { getCollection, getEntry, type CollectionEntry } from 'astro:content';
-import { checkSettings } from './checks';
+import { checkLocalLinks, checkSettings } from './checks';
 import { homePapers, organizePapers, type OrganizedPapers } from './format';
 
 type Paper = CollectionEntry<'papers'>;
@@ -30,10 +30,14 @@ async function load(): Promise<SiteData> {
   if (!profile) throw new Error('Missing src/content/profile/index.md');
   const papers = await getCollection('papers');
 
-  const errors = checkSettings(profile.data, papers.map((p) => p.id));
+  const publicDir = process.env.SITE_PUBLIC_DIR ?? 'public';
+  const errors = [
+    ...checkSettings(profile.data, papers.map((p) => p.id)),
+    ...checkLocalLinks(papers, (sitePath) => existsSync(join(publicDir, sitePath))),
+  ];
   if (errors.length) throw new Error(`Site settings problem:\n- ${errors.join('\n- ')}`);
 
-  const hasCv = existsSync(join(process.env.SITE_PUBLIC_DIR ?? 'public', 'cv.pdf'));
+  const hasCv = existsSync(join(publicDir, 'cv.pdf'));
   if (!hasCv) console.warn('[site] No public/cv.pdf yet, so CV links are hidden.');
 
   const jmpId = profile.data.jobMarket.paper;

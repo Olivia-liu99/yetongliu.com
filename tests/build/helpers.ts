@@ -3,9 +3,14 @@ import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { parse, type HTMLElement } from 'node-html-parser';
 
-export type Scenario = 'default' | 'market';
+export type Scenario = 'default' | 'market' | 'nocv';
 
 const dir = (s: Scenario) => join('dist-test', s);
+
+/** Everything a scenario's `astro build` printed, including warnings and errors. */
+export function buildLog(name: Scenario | 'badlink'): string {
+  return readFileSync(join('dist-test', `${name}.log`), 'utf8');
+}
 
 export function read(s: Scenario, path: string): string {
   return readFileSync(join(dir(s), path), 'utf8');

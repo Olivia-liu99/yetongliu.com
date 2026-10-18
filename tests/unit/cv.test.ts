@@ -1,8 +1,13 @@
 import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
-import { tmpdir } from 'node:os';
+import { homedir, tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { expect, test } from 'vitest';
-import { copyCv } from '../../scripts/cv.mjs';
+import { copyCv, DEFAULT_SOURCE } from '../../scripts/cv.mjs';
+
+test('the default CV path comes from the home folder, not a hard-coded account', () => {
+  expect(readFileSync('scripts/cv.mjs', 'utf8')).not.toMatch(/\/Users\//);
+  expect(DEFAULT_SOURCE).toBe(join(homedir(), 'Library/CloudStorage/Dropbox/CV/Yetong_Liu_CV.pdf'));
+});
 
 test('copyCv copies a PDF and rejects anything else', async () => {
   const dir = mkdtempSync(join(tmpdir(), 'cv-'));

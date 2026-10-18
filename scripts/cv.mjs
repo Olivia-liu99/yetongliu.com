@@ -5,12 +5,13 @@
 // Then commit and push to publish it. The CV links on the site appear
 // automatically once public/cv.pdf exists.
 import { copyFile, mkdir, open } from 'node:fs/promises';
-import { dirname } from 'node:path';
+import { homedir } from 'node:os';
+import { dirname, join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
-// The PDF of your master CV. Plain `npm run cv` copies this file; change the
-// path if your CV moves.
-const DEFAULT_SOURCE = '~/Library/CloudStorage/Dropbox/CV/Yetong_Liu_CV.pdf';
+// The PDF of your master CV, in the CV folder of your Dropbox. Plain
+// `npm run cv` copies this file; change the path if your CV moves.
+export const DEFAULT_SOURCE = join(homedir(), 'Library/CloudStorage/Dropbox/CV/Yetong_Liu_CV.pdf');
 const DEST = 'public/cv.pdf';
 
 export async function copyCv(source, dest = DEST) {
