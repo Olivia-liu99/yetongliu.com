@@ -1,0 +1,35 @@
+---
+interface Props {
+  current?: 'home' | 'research' | 'teaching';
+  name: string;
+  hasCv: boolean;
+  showTeaching: boolean;
+}
+
+const { current, name, hasCv, showTeaching } = Astro.props;
+
+const items = [
+  { label: 'Research', href: '/research/', key: 'research' },
+  ...(showTeaching ? [{ label: 'Teaching', href: '/teaching/', key: 'teaching' }] : []),
+  ...(hasCv ? [{ label: 'CV', href: '/cv.pdf', key: 'cv' }] : []),
+];
+---
+
+<header class="site-header page">
+  <div class="site-header-inner">
+    {current === 'home' ? <h1 class="site-name">{name}</h1> : <a class="site-name" href="/">{name}</a>}
+    <nav class="site-nav" aria-label="Main">
+      <ul>
+        {
+          items.map((item) => (
+            <li>
+              <a href={item.href} aria-current={item.key === current ? 'page' : undefined}>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>

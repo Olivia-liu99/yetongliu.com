@@ -1,0 +1,76 @@
+---
+import '@fontsource/spectral/400.css';
+import '@fontsource/spectral/400-italic.css';
+import '@fontsource/spectral/500.css';
+import '@fontsource/spectral-sc/500.css';
+import '../styles/global.css';
+import spectral400 from '@fontsource/spectral/files/spectral-latin-400-normal.woff2?url';
+import { getImage } from 'astro:assets';
+import SiteFooter from '../components/SiteFooter.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import { jsonLdString } from '../lib/format';
+import { loadSite } from '../lib/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  current?: 'home' | 'research' | 'teaching';
+}
+
+const { title, description, current } = Astro.props;
+const { profile, hasCv, showTeaching, buildDate } = await loadSite();
+const p = profile.data;
+const site = Astro.site!;
+
+const pageTitle = title ? `${title} | ${p.name}` : p.name;
+const pageDescription = description ?? p.description;
+const canonical = new URL(Astro.url.pathname, site).href;
+const ogImage = p.photo
+  ? new URL((await getImage({ src: p.photo, width: 1200, format: 'jpg' })).src, site).href
+  : undefined;
+
+const person =
+  current === 'home'
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'Person',
+        name: p.name,
+        url: site.href,
+        jobTitle: p.title,
+        affiliation: { '@type': 'Organization', name: p.affiliation },
+        email: `mailto:${p.email}`,
+        ...(ogImage ? { image: ogImage } : {}),
+        sameAs: Object.values(p.links).filter(Boolean),
+        knowsAbout: p.interests,
+      }
+    : undefined;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <link rel="canonical" href={canonical} />
+    <link rel="preload" href={spectral400} as="font" type="font/woff2" crossorigin />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta property="og:type" content={current === 'home' ? 'profile' : 'website'} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:url" content={canonical} />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    <meta name="twitter:card" content="summary" />
+    {person && <script is:inline type="application/ld+json" set:html={jsonLdString(person)} />}
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <SiteHeader current={current} name={p.name} hasCv={hasCv} showTeaching={showTeaching} />
+    <main id="main" class="page">
+      <slot />
+    </main>
+    <SiteFooter email={p.email} buildDate={buildDate} />
+  </body>
+</html>

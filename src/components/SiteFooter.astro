@@ -1,0 +1,17 @@
+---
+import { monthYear } from '../lib/format';
+
+interface Props {
+  email: string;
+  buildDate: Date;
+}
+
+const { email, buildDate } = Astro.props;
+---
+
+<footer class="site-footer page">
+  <div class="site-footer-inner">
+    <a href={`mailto:${email}`}>{email}</a>
+    <span>Updated {monthYear(buildDate)}</span>
+  </div>
+</footer>

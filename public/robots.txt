@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://yetongliu.com/sitemap-index.xml
