@@ -44,17 +44,17 @@ Either way, the site is updated about two minutes later.
 
 ```yaml
 ---
-title: "Radical Innovation and Incumbent Survival: Evidence from the Hard Disk Drive Industry"
+title: "Your Paper Title: Evidence from an Example Setting"
 group: "working"
 status: "Revise and resubmit at *Strategic Management Journal*"
 coauthors:
-  - name: "Joshua Gans"
-    url: "https://www.rotman.utoronto.ca/the-rotman-experience/our-community/people/gans-joshua/"
+  - name: "Coauthor Name"
+    url: "https://www.example.edu/coauthor"
 note: "Winner, Best Conference PhD Paper Prize, SMS 2027"
 order: 1
 links:
   ssrn: "https://ssrn.com/abstract=1234567"
-  slides: "/papers/hdd-slides.pdf"
+  slides: "/papers/your-paper-slides.pdf"
 ---
 The abstract goes here, as ordinary paragraphs.
 ```

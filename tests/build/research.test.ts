@@ -11,17 +11,14 @@ test("Yetong's research page", () => {
   expect(labels(d)).toEqual(['Working papers', 'Work in progress']);
   expect(titles(d, 'working-papers')).toEqual(['When Better AI Reveals Less']);
   expect(titles(d, 'work-in-progress')).toEqual([
-    'Radical Innovation and Incumbent Survival: Evidence from the Hard Disk Drive Industry',
-    'Does Delivery Format Close the Gender Gap in AI Adoption? Evidence from a Field Experiment']);
+    'Radical Innovation and Incumbent Survival: Evidence from the Hard Disk Drive Industry']);
   const p1 = entry(d, 'When Better AI Reveals Less');
-  expect(p1.querySelector('.paper-status')?.innerHTML).toBe('Submitted to <em>Economics Letters</em>');
+  expect(p1.querySelector('.paper-status')?.innerHTML).toBe('Under review at <em>Economics Letters</em>');
   expect(p1.querySelector('summary')?.text).toContain('Abstract');
   expect(p1.querySelectorAll('.paper-links a').map((a) => a.getAttribute('href'))).toEqual(['https://ssrn.com/abstract=7592711']);
   const p2 = entry(d, titles(d, 'work-in-progress')[0]);
-  expect(p2.querySelector('.paper-meta')?.text.trim()).toBe('with Joshua Gans');
-  expect(p2.querySelector('.paper-meta a.coauthor')?.getAttribute('href')).toMatch(/^https:\/\//);
+  expect(p2.querySelector('.paper-meta')).toBeNull();
   expect(p2.querySelector('.paper-note')?.text.trim()).toBe('Supported by a Management Data and Analytics Lab research grant');
-  expect(entry(d, titles(d, 'work-in-progress')[1]).querySelector('.paper-meta')?.text.trim()).toBe('with Hong Luo and Solène Delecourt');
   expect(read('default', 'sitemap-0.xml')).toContain('https://yetongliu.com/research/');
   expect(read('default', 'sitemap-0.xml')).not.toContain('404');
 });

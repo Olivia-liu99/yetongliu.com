@@ -15,20 +15,18 @@ test("Yetong's home page", () => {
   expect(d.querySelector('picture img')?.getAttribute('alt')).toBe('Portrait of Yetong Liu');
   expect(d.querySelector('.bio')?.text).toContain('I study innovation and how organizations adopt new technologies.');
   expect(d.querySelectorAll('.profile-links a').map(linkText))
-    .toEqual(['yetong.liu@mail.utoronto.ca', 'CV', 'Google Scholar', 'LinkedIn', 'ORCID', 'SSRN']);
+    .toEqual(['yetong.liu@mail.utoronto.ca', 'CV', 'Google Scholar', 'LinkedIn']);
   expect(labels(d)).toEqual(['Research interests', 'Current research']);
   expect(section(d, 'research-interests').querySelector('.row-body')?.text.trim())
-    .toBe('Innovation, technology diffusion and adoption, organizational design');
+    .toBe('Innovation, technology diffusion and adoption, artificial intelligence');
   expect(titles(d, 'research-list')).toEqual([
     'When Better AI Reveals Less',
-    'Radical Innovation and Incumbent Survival: Evidence from the Hard Disk Drive Industry',
-    'Does Delivery Format Close the Gender Gap in AI Adoption? Evidence from a Field Experiment']);
+    'Radical Innovation and Incumbent Survival: Evidence from the Hard Disk Drive Industry']);
   expect(section(d, 'research-list').querySelector('a[href="/research/"]')?.text.trim()).toBe('All papers and abstracts');
   expect(d.querySelectorAll('.paper--compact .paper-actions')).toHaveLength(0);
   const ld = JSON.parse(d.querySelector('script[type="application/ld+json"]')!.text);
   expect([ld['@type'], ld.name, ld.sameAs]).toEqual(['Person', 'Yetong Liu',
-    ['https://scholar.google.com/citations?user=2wplHcMAAAAJ', 'https://www.linkedin.com/in/yetongliu/',
-      'https://orcid.org/0009-0006-5846-8484', 'https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=13542832']]);
+    ['https://scholar.google.com/citations?user=2wplHcMAAAAJ', 'https://www.linkedin.com/in/yetongliu/']]);
   expect(d.querySelector('meta[property="og:image"]')?.getAttribute('content')).toMatch(/^https:\/\/yetongliu\.com\/_astro\/.+\.jpg$/);
   expect(d.querySelector('header [lang="zh"]')).toBeNull();
 });
