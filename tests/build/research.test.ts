@@ -1,9 +1,7 @@
 import type { HTMLElement } from 'node-html-parser';
 import { expect, test } from 'vitest';
-import { exists, html, read } from './helpers';
+import { exists, html, labels, read, titles } from './helpers';
 
-const titles = (d: HTMLElement, id: string) => d.querySelectorAll(`section[aria-labelledby="${id}"] h3`).map((h) => h.text.trim());
-const labels = (d: HTMLElement) => d.querySelectorAll('h2.row-label').map((h) => h.text.trim());
 const entry = (d: HTMLElement, title: string) => d.querySelectorAll('article').find((a) => a.querySelector('h3')!.text.trim() === title)!;
 
 test("Yetong's research page", () => {

@@ -1,5 +1,6 @@
 ---
 name: "Test Candidate"
+nameChinese: "测试"
 title: "PhD Candidate in Strategic Management"
 affiliation: "Example School of Management, Example University"
 email: "candidate@example.edu"

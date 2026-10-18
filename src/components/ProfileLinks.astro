@@ -1,0 +1,23 @@
+---
+// Email, CV, and profile links under the bio. Links that aren't set don't appear.
+interface Props {
+  email: string;
+  links: { scholar?: string; linkedin?: string; orcid?: string; ssrn?: string };
+  hasCv: boolean;
+}
+
+const { email, links, hasCv } = Astro.props;
+
+const items = [
+  { label: email, href: `mailto:${email}` },
+  { label: 'CV', href: hasCv ? '/cv.pdf' : undefined },
+  { label: 'Google Scholar', href: links.scholar },
+  { label: 'LinkedIn', href: links.linkedin },
+  { label: 'ORCID', href: links.orcid },
+  { label: 'SSRN', href: links.ssrn },
+].filter((item) => item.href);
+---
+
+<p class="profile-links">
+  {items.map((item) => <a href={item.href}>{item.label}</a>)}
+</p>

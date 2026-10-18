@@ -336,6 +336,99 @@ main {
   }
 }
 
+/* ---------- Home ---------- */
+.photo img {
+  display: block;
+  width: var(--col);
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+.intro--full {
+  grid-column: 1 / -1;
+}
+
+.position {
+  margin-bottom: 14px;
+  line-height: 1.5;
+  color: var(--graphite);
+}
+
+.market-line {
+  display: block;
+  font-style: italic;
+  color: var(--oxblood);
+}
+
+.bio p + p {
+  margin-top: 12px;
+}
+
+.profile-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 22px;
+  margin-top: 16px;
+}
+
+.grid-rule {
+  grid-column: 1 / -1;
+  width: 100%;
+  margin: 4px 0 0;
+  border: 0;
+  border-top: 1px solid var(--rule);
+}
+
+.paper-title--feature {
+  font-size: var(--size-feature);
+  line-height: 1.35;
+}
+
+.paper-summary {
+  margin-top: 6px;
+  font-size: var(--size-meta);
+  color: var(--graphite);
+}
+
+.research-more {
+  margin-top: 18px;
+}
+
+.references {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 28px;
+  padding: 0;
+  list-style: none;
+}
+
+.reference-role {
+  display: block;
+  font-size: 16px;
+  color: var(--graphite);
+}
+
+.name-chinese {
+  margin-left: 0.4em;
+  font-size: 0.75em;
+  color: var(--graphite);
+}
+
+@media (max-width: 720px) {
+  .photo {
+    margin-bottom: 8px;
+  }
+
+  .photo img {
+    width: 160px;
+  }
+
+  .references {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* ---------- Footer ---------- */
 .site-footer {
   margin-top: 44px;

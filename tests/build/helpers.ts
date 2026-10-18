@@ -19,6 +19,13 @@ export function html(s: Scenario, path: string): HTMLElement {
   return parse(read(s, path));
 }
 
+/** Paper titles inside the labeled section with this id. */
+export const titles = (d: HTMLElement, id: string) =>
+  d.querySelectorAll(`section[aria-labelledby="${id}"] h3`).map((h) => h.text.trim());
+
+/** The small-caps section labels, in page order. */
+export const labels = (d: HTMLElement) => d.querySelectorAll('h2.row-label').map((h) => h.text.trim());
+
 export function allHtml(s: Scenario): { path: string; root: HTMLElement }[] {
   return (readdirSync(dir(s), { recursive: true }) as string[])
     .filter((file) => file.endsWith('.html'))

@@ -1,0 +1,77 @@
+---
+import { Picture } from 'astro:assets';
+import { render } from 'astro:content';
+import PaperEntry from '../components/PaperEntry.astro';
+import ProfileLinks from '../components/ProfileLinks.astro';
+import Row from '../components/Row.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { interestsLine } from '../lib/format';
+import { loadSite } from '../lib/site';
+
+const { profile, organized, homeList, hasCv } = await loadSite();
+const p = profile.data;
+const { Content: Bio } = await render(profile);
+const { onMarket, years, references } = p.jobMarket;
+const jmp = organized.jmp;
+---
+
+<BaseLayout current="home">
+  <div class="grid">
+    {
+      p.photo && (
+        <Picture
+          src={p.photo}
+          alt={p.photoAlt ?? `Portrait of ${p.name}`}
+          widths={[216, 432, 648]}
+          sizes="(max-width: 720px) 160px, 216px"
+          formats={['avif', 'webp']}
+          pictureAttributes={{ class: 'photo' }}
+        />
+      )
+    }
+    <div class:list={['intro', { 'intro--full': !p.photo }]}>
+      <p class="position">
+        {p.title}<br />{p.affiliation}
+        {onMarket && <span class="market-line">On the {years} academic job market</span>}
+      </p>
+      <div class="bio"><Bio /></div>
+      <ProfileLinks email={p.email} links={p.links} hasCv={hasCv} />
+    </div>
+
+    <hr class="grid-rule" />
+
+    {
+      jmp && (
+        <Row label="Job market paper" id="job-market-paper">
+          <PaperEntry paper={jmp} variant="feature" />
+        </Row>
+      )
+    }
+
+    <Row label="Research interests" id="research-interests">
+      <p>{interestsLine(p.interests)}</p>
+    </Row>
+
+    <Row label={jmp ? 'Other research' : 'Current research'} id="research-list">
+      {homeList.map((paper) => <PaperEntry paper={paper} variant="compact" />)}
+      <p class="research-more"><a href="/research/">All papers and abstracts</a></p>
+    </Row>
+
+    {
+      onMarket && references.length > 0 && (
+        <Row label="References" id="references">
+          <ul class="references">
+            {references.map((r) => (
+              <li>
+                <span class="reference-name">{r.url ? <a href={r.url}>{r.name}</a> : r.name}</span>
+                <span class="reference-role">
+                  {r.title}, {r.school}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </Row>
+      )
+    }
+  </div>
+</BaseLayout>
