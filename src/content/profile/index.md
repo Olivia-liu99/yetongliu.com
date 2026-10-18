@@ -7,8 +7,10 @@ description: "Yetong Liu is a PhD student in Strategic Management at the Rotman 
 interests: ["Innovation", "Technology diffusion and adoption", "Organizational design"]
 photo: "./photo.jpg"
 links:
+  scholar: "https://scholar.google.com/citations?user=2wplHcMAAAAJ"
   linkedin: "https://www.linkedin.com/in/yetongliu/"
   orcid: "https://orcid.org/0009-0006-5846-8484"
+  ssrn: "https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=13542832"
 jobMarket:
   onMarket: false
 showTeaching: false

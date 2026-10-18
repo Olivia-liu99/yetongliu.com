@@ -8,7 +8,7 @@ test('404 page uses the shell', () => {
   expect(d.querySelector('title')?.text).toBe('Page not found | Yetong Liu');
   expect(d.querySelector('a.skip-link')?.getAttribute('href')).toBe('#main');
   expect(d.querySelector('header a.site-name')?.getAttribute('href')).toBe('/');
-  expect(d.querySelectorAll('nav a').map((a) => a.text.trim())).toEqual(['Research']);
+  expect(d.querySelectorAll('nav a').map((a) => a.text.trim())).toEqual(['Research', 'CV']);
   expect(d.querySelectorAll('h1').map((h) => h.text.trim())).toEqual(['Page not found']);
   expect(d.querySelector('main a[href="/"]')).toBeTruthy();
   expect(d.querySelector('footer a[href="mailto:yetong.liu@mail.utoronto.ca"]')).toBeTruthy();
@@ -42,6 +42,6 @@ test('no third-party resources and no client scripts', () => {
 test('static files and CV presence', () => {
   expect(read('default', 'CNAME').trim()).toBe('yetongliu.com');
   expect(read('default', 'robots.txt')).toContain('Sitemap: https://yetongliu.com/sitemap-index.xml');
-  expect(exists('default', 'cv.pdf')).toBe(false);
+  expect(read('default', 'cv.pdf').startsWith('%PDF-')).toBe(true);
   expect(exists('market', 'cv.pdf')).toBe(true);
 });

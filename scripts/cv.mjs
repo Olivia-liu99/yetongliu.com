@@ -8,10 +8,9 @@ import { copyFile, mkdir, open } from 'node:fs/promises';
 import { dirname } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
-// Once you settle on one master CV, put the path to its PDF here, for example
-// '~/Library/CloudStorage/Dropbox/CV/CV_Yetong.pdf'.
-// Then plain `npm run cv` copies that file.
-const DEFAULT_SOURCE = '';
+// The PDF of your master CV. Plain `npm run cv` copies this file; change the
+// path if your CV moves.
+const DEFAULT_SOURCE = '~/Library/CloudStorage/Dropbox/CV/Yetong_Liu_CV.pdf';
 const DEST = 'public/cv.pdf';
 
 export async function copyCv(source, dest = DEST) {

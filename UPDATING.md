@@ -82,11 +82,11 @@ links:
 
 ## 5. Update your CV
 
-1. Export your CV as a PDF. Check that it doesn't include anything you wouldn't want public, like your phone number.
-2. Run `npm run cv -- "/path/to/your CV.pdf"`. Tip: type `npm run cv -- ` and then drag the PDF into the terminal.
+1. Recompile your CV in LaTeX as usual. Check that it doesn't include anything you wouldn't want public, like your phone number.
+2. Run `npm run cv`. It copies your master CV, `Dropbox/CV/Yetong_Liu_CV.pdf`, into the site.
 3. Publish (step 3).
 
-The "CV" links in the menu and under your bio appear as soon as `public/cv.pdf` exists. To skip typing the path every time, put it in the `DEFAULT_SOURCE` line near the top of `scripts/cv.mjs`, and then plain `npm run cv` will work.
+To use a different file just once, run `npm run cv -- "/path/to/other CV.pdf"`. Tip: type `npm run cv -- ` and then drag the PDF into the terminal. If your master CV moves, change the `DEFAULT_SOURCE` line near the top of `scripts/cv.mjs`.
 
 ## 6. Change your photo
 
