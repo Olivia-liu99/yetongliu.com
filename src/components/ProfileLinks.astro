@@ -8,16 +8,17 @@ interface Props {
 
 const { email, links, hasCv } = Astro.props;
 
-const items = [
-  { label: email, href: `mailto:${email}` },
+const candidates: { label: string; href?: string; translate?: 'no' }[] = [
+  { label: email, href: `mailto:${email}`, translate: 'no' },
   { label: 'CV', href: hasCv ? '/cv.pdf' : undefined },
   { label: 'Google Scholar', href: links.scholar },
   { label: 'LinkedIn', href: links.linkedin },
   { label: 'ORCID', href: links.orcid },
   { label: 'SSRN', href: links.ssrn },
-].filter((item) => item.href);
+];
+const items = candidates.filter((item) => item.href);
 ---
 
 <p class="profile-links">
-  {items.map((item) => <a href={item.href}>{item.label}</a>)}
+  {items.map((item) => <a href={item.href} translate={item.translate}>{item.label}</a>)}
 </p>

@@ -11,7 +11,7 @@ const { email, buildDate } = Astro.props;
 
 <footer class="site-footer page">
   <div class="site-footer-inner">
-    <a href={`mailto:${email}`}>{email}</a>
+    <a href={`mailto:${email}`} translate="no">{email}</a>
     <span>Updated {monthYear(buildDate)}</span>
   </div>
 </footer>

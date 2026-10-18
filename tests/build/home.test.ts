@@ -31,6 +31,13 @@ test("Yetong's home page", () => {
   expect(d.querySelector('header [lang="zh"]')).toBeNull();
 });
 
+test('the portrait loads first and the email is never auto-translated', () => {
+  const d = html('default', 'index.html');
+  const img = d.querySelector('picture img')!;
+  expect([img.getAttribute('loading'), img.getAttribute('fetchpriority')]).toEqual(['eager', 'high']);
+  expect(d.querySelector('.profile-links a[href^="mailto:"]')?.getAttribute('translate')).toBe('no');
+});
+
 test('market home page', () => {
   const d = html('market', 'index.html');
   expect(d.querySelector('.market-line')?.text.trim()).toBe('On the 2029–2030 academic job market');

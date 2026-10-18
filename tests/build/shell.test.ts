@@ -15,6 +15,13 @@ test('404 page uses the shell', () => {
   expect(d.querySelector('footer')?.text).toContain(`Updated ${monthYear(new Date())}`);
 });
 
+test('browser chrome and translation hints', () => {
+  const d = html('default', '404.html');
+  expect(d.querySelector('meta[name="theme-color"]')?.getAttribute('content')).toBe('#FFFFFF');
+  expect(d.querySelector('header .site-name')?.getAttribute('translate')).toBe('no');
+  expect(d.querySelector('footer a[href^="mailto:"]')?.getAttribute('translate')).toBe('no');
+});
+
 test('market menu shows Teaching and CV', () => {
   expect(html('market', '404.html').querySelectorAll('nav a').map((a) => [a.text.trim(), a.getAttribute('href')]))
     .toEqual([['Research', '/research/'], ['Teaching', '/teaching/'], ['CV', '/cv.pdf']]);

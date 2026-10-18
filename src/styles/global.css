@@ -43,8 +43,10 @@
 }
 
 html {
+  color-scheme: light;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgb(138 45 51 / 0.12);
 }
 
 body {
@@ -80,6 +82,11 @@ a {
 
 a:hover {
   text-decoration-color: currentColor;
+}
+
+a,
+summary {
+  touch-action: manipulation;
 }
 
 :focus-visible {
@@ -143,6 +150,10 @@ a:hover {
   text-decoration: none;
 }
 
+a.site-name:hover {
+  color: var(--oxblood);
+}
+
 .site-nav ul {
   display: flex;
   gap: 26px;
@@ -201,6 +212,7 @@ main {
   line-height: 1.62;
   letter-spacing: 0.03em;
   color: var(--graphite);
+  scroll-margin-top: 24px;
 }
 
 .research-intro {
@@ -216,6 +228,7 @@ main {
   font-size: inherit;
   font-weight: 500;
   line-height: 1.4;
+  text-wrap: balance;
 }
 
 .paper-meta,
