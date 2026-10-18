@@ -1,0 +1,17 @@
+node_modules/
+/dist/
+/dist-test/
+/.astro/
+/.venv/
+/test-results/
+__pycache__/
+.pytest_cache/
+# private working material, never published
+/docs/
+/papers/
+/.superpowers/
+/*.jpg
+/*.jpeg
+/*.png
+/*.heic
+.DS_Store
