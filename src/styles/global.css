@@ -182,6 +182,160 @@ main {
   overflow-wrap: anywhere;
 }
 
+/* ---------- Two-column grid with labeled rows ---------- */
+.grid {
+  display: grid;
+  grid-template-columns: var(--col) minmax(0, 1fr);
+  column-gap: var(--gap);
+  row-gap: 26px;
+}
+
+.row {
+  display: contents;
+}
+
+.row-label {
+  font-family: var(--serif-sc);
+  font-size: var(--size-label);
+  font-weight: 500;
+  line-height: 1.62;
+  letter-spacing: 0.03em;
+  color: var(--graphite);
+}
+
+.research-intro {
+  grid-column: 2;
+}
+
+/* ---------- Papers ---------- */
+.paper + .paper {
+  margin-top: 22px;
+}
+
+.paper-title {
+  font-size: inherit;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.paper-meta,
+.paper-status,
+.paper-note {
+  font-size: var(--size-meta);
+  color: var(--graphite);
+}
+
+.paper-note {
+  font-style: italic;
+}
+
+.coauthor {
+  color: var(--graphite);
+  text-decoration-color: #C4C6CD;
+}
+
+.coauthor:hover {
+  text-decoration-color: currentColor;
+}
+
+.paper-actions {
+  margin-top: 5px;
+  font-size: var(--size-links);
+}
+
+.paper-links {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 2px 18px;
+}
+
+.paper-actions summary {
+  width: fit-content;
+  list-style: none;
+  cursor: pointer;
+  color: var(--oxblood);
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: rgb(138 45 51 / 0.35);
+}
+
+.paper-actions summary::-webkit-details-marker {
+  display: none;
+}
+
+.paper-actions summary::before {
+  content: '';
+  display: inline-block;
+  margin-right: 6px;
+  vertical-align: 1px;
+  border-left: 5px solid currentColor;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+}
+
+.paper-actions details[open] summary::before {
+  transform: rotate(90deg);
+}
+
+.paper-actions summary:hover {
+  text-decoration-color: currentColor;
+}
+
+.paper-abstract {
+  margin: 10px 0 2px;
+  padding-left: 14px;
+  border-left: 2px solid var(--rule);
+  font-size: 16.5px;
+}
+
+.paper-abstract p + p {
+  margin-top: 8px;
+}
+
+/* "Abstract" and the paper's links share a line; the abstract opens beneath
+   both. Browsers without ::details-content show the toggle above the links. */
+@supports selector(::details-content) {
+  .paper-actions--abstract {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 18px;
+    align-items: baseline;
+  }
+
+  .paper-actions--abstract details {
+    display: contents;
+  }
+
+  .paper-actions--abstract summary {
+    grid-area: 1 / 1;
+  }
+
+  .paper-actions--abstract .paper-links {
+    grid-area: 1 / 2;
+  }
+
+  .paper-actions--abstract details::details-content {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+}
+
+@media (max-width: 720px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 8px;
+  }
+
+  .row-label {
+    margin-top: 14px;
+  }
+
+  .research-intro {
+    grid-column: 1;
+  }
+}
+
 /* ---------- Footer ---------- */
 .site-footer {
   margin-top: 44px;

@@ -1,0 +1,15 @@
+---
+// A labeled section: the small-caps label sits in the left column, the content
+// in the right, like the section names on the CV.
+interface Props {
+  label: string;
+  id: string;
+}
+
+const { label, id } = Astro.props;
+---
+
+<section class="row" aria-labelledby={id}>
+  <h2 class="row-label" id={id}>{label}</h2>
+  <div class="row-body"><slot /></div>
+</section>

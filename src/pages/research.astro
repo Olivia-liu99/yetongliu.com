@@ -1,0 +1,32 @@
+---
+import PaperEntry from '../components/PaperEntry.astro';
+import Row from '../components/Row.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { loadSite } from '../lib/site';
+
+const { profile, organized } = await loadSite();
+const { name, researchIntro } = profile.data;
+
+const groups = [
+  { id: 'job-market-paper', label: 'Job market paper', papers: organized.jmp ? [organized.jmp] : [] },
+  { id: 'publications', label: 'Publications', papers: organized.published },
+  { id: 'working-papers', label: 'Working papers', papers: organized.working },
+  { id: 'work-in-progress', label: 'Work in progress', papers: organized.inProgress },
+].filter((group) => group.papers.length > 0);
+---
+
+<BaseLayout title="Research" description={`Working papers and research by ${name}.`} current="research">
+  <h1 class="visually-hidden">Research</h1>
+  <div class="grid">
+    {researchIntro && <p class="research-intro">{researchIntro}</p>}
+    {
+      groups.map((group) => (
+        <Row label={group.label} id={group.id}>
+          {group.papers.map((paper) => (
+            <PaperEntry paper={paper} variant="full" />
+          ))}
+        </Row>
+      ))
+    }
+  </div>
+</BaseLayout>

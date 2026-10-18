@@ -1,0 +1,25 @@
+---
+// Only built when showTeaching is true in the profile settings; otherwise
+// /teaching/ doesn't exist at all.
+import { getEntry, render } from 'astro:content';
+import Row from '../components/Row.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { loadSite } from '../lib/site';
+
+export async function getStaticPaths() {
+  const { showTeaching } = await loadSite();
+  return showTeaching ? [{ params: { teaching: 'teaching' } }] : [];
+}
+
+const teaching = await getEntry('teaching', 'index');
+const Teaching = teaching ? (await render(teaching)).Content : undefined;
+---
+
+<BaseLayout title="Teaching" current="teaching">
+  <h1 class="visually-hidden">Teaching</h1>
+  <div class="grid">
+    <Row label="Teaching" id="teaching">
+      {Teaching && <Teaching />}
+    </Row>
+  </div>
+</BaseLayout>
