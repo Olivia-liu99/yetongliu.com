@@ -15,7 +15,7 @@ test("Yetong's home page", () => {
   expect(d.querySelector('picture img')?.getAttribute('alt')).toBe('Portrait of Yetong Liu');
   expect(d.querySelector('.bio')?.text).toContain('I study innovation and how organizations adopt new technologies.');
   expect(d.querySelectorAll('.profile-links a').map(linkText))
-    .toEqual(['yetong.liu@mail.utoronto.ca', 'CV', 'Google Scholar', 'LinkedIn']);
+    .toEqual(['yetong.liu@mail.utoronto.ca', 'CV (opens in a new tab)', 'Google Scholar (opens in a new tab)', 'LinkedIn (opens in a new tab)']);
   expect(labels(d)).toEqual(['Research interests', 'Current research']);
   expect(section(d, 'research-interests').querySelector('.row-body')?.text.trim())
     .toBe('Innovation, technology diffusion and adoption, artificial intelligence');
@@ -53,8 +53,28 @@ test('market home page', () => {
   expect(d.querySelector('picture')).toBeNull();
   expect(d.querySelector('.intro--full')).toBeTruthy();
   expect(d.querySelectorAll('.profile-links a').map(linkText))
-    .toEqual(['a.very.long.fixture.address.for.overflow.testing@example-university.edu', 'CV', 'Google Scholar']);
+    .toEqual(['a.very.long.fixture.address.for.overflow.testing@example-university.edu', 'CV (opens in a new tab)', 'Google Scholar (opens in a new tab)']);
   expect(d.querySelector('header [lang="zh"]')?.text.trim()).toBe('测试');
+});
+
+test('under the bio, every link but the email opens a new tab, and tells screen readers so', () => {
+  const bioLinks = {
+    default: [
+      ['yetong.liu@mail.utoronto.ca', null],
+      ['CV (opens in a new tab)', '_blank'],
+      ['Google Scholar (opens in a new tab)', '_blank'],
+      ['LinkedIn (opens in a new tab)', '_blank'],
+    ],
+    market: [
+      ['a.very.long.fixture.address.for.overflow.testing@example-university.edu', null],
+      ['CV (opens in a new tab)', '_blank'],
+      ['Google Scholar (opens in a new tab)', '_blank'],
+    ],
+  };
+  for (const s of ['default', 'market'] as const) {
+    expect(html(s, 'index.html').querySelectorAll('.profile-links a').map((a) => [a.text.trim(), a.getAttribute('target') ?? null]), s)
+      .toEqual(bioLinks[s]);
+  }
 });
 
 test('every internal link resolves to a built file', () => {

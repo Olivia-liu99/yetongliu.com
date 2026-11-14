@@ -1,5 +1,6 @@
 ---
 // Email, CV, and profile links under the bio. Links that aren't set don't appear.
+// Every link except the email opens in a new tab, so visitors keep the site open.
 interface Props {
   email: string;
   links: { scholar?: string; linkedin?: string; orcid?: string; ssrn?: string };
@@ -16,9 +17,18 @@ const candidates: { label: string; href?: string; translate?: 'no' }[] = [
   { label: 'ORCID', href: links.orcid },
   { label: 'SSRN', href: links.ssrn },
 ];
-const items = candidates.filter((item) => item.href);
+const items = candidates
+  .filter((item) => item.href)
+  .map((item) => ({ ...item, newTab: !item.href?.startsWith('mailto:') }));
 ---
 
 <p class="profile-links">
-  {items.map((item) => <a href={item.href} translate={item.translate}>{item.label}</a>)}
+  {
+    items.map((item) => (
+      <a href={item.href} translate={item.translate} target={item.newTab ? '_blank' : undefined}>
+        {item.label}
+        {item.newTab && <span class="visually-hidden"> (opens in a new tab)</span>}
+      </a>
+    ))
+  }
 </p>
