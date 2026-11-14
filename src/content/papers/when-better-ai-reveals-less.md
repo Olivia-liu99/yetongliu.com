@@ -1,7 +1,6 @@
 ---
 title: "When Better AI Reveals Less"
 group: "working"
-status: "Under review at *Economics Letters*"
 order: 1
 links:
   ssrn: "https://ssrn.com/abstract=7592711"

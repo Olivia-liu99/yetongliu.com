@@ -13,7 +13,7 @@ test("Yetong's research page", () => {
   expect(titles(d, 'work-in-progress')).toEqual([
     'Radical Innovation and Incumbent Survival: Evidence from the Hard Disk Drive Industry']);
   const p1 = entry(d, 'When Better AI Reveals Less');
-  expect(p1.querySelector('.paper-status')?.innerHTML).toBe('Under review at <em>Economics Letters</em>');
+  expect(p1.querySelector('.paper-status')).toBeNull();
   expect(p1.querySelector('summary')?.text).toContain('Abstract');
   expect(p1.querySelectorAll('.paper-links a').map((a) => a.getAttribute('href'))).toEqual(['https://ssrn.com/abstract=7592711']);
   const p2 = entry(d, titles(d, 'work-in-progress')[0]);

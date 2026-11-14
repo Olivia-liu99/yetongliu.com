@@ -20,7 +20,7 @@ test('listSeparator', () => {
 });
 
 test('inlineEmphasis', () => {
-  expect(inlineEmphasis('Submitted to *Economics Letters*')).toBe('Submitted to <em>Economics Letters</em>');
+  expect(inlineEmphasis('Submitted to *Journal of Tests*')).toBe('Submitted to <em>Journal of Tests</em>');
   expect(inlineEmphasis('A <b> & "c"')).toBe('A &lt;b&gt; &amp; &quot;c&quot;');
   expect(inlineEmphasis('5 * 3')).toBe('5 * 3');
 });
