@@ -1,6 +1,7 @@
 ---
 import { Picture } from 'astro:assets';
 import { render } from 'astro:content';
+import NewTabHint from '../components/NewTabHint.astro';
 import PaperEntry from '../components/PaperEntry.astro';
 import ProfileLinks from '../components/ProfileLinks.astro';
 import Row from '../components/Row.astro';
@@ -65,7 +66,16 @@ const jmp = organized.jmp;
           <ul class="references">
             {references.map((r) => (
               <li>
-                <span class="reference-name">{r.url ? <a href={r.url}>{r.name}</a> : r.name}</span>
+                <span class="reference-name">
+                  {r.url ? (
+                    <a href={r.url} target="_blank">
+                      {r.name}
+                      <NewTabHint />
+                    </a>
+                  ) : (
+                    r.name
+                  )}
+                </span>
                 <span class="reference-role">
                   {r.title}, {r.school}
                 </span>

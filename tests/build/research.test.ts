@@ -1,6 +1,6 @@
 import type { HTMLElement } from 'node-html-parser';
 import { expect, test } from 'vitest';
-import { exists, html, labels, read, titles } from './helpers';
+import { exists, html, labels, read, titles, visibleText } from './helpers';
 
 const entry = (d: HTMLElement, title: string) => d.querySelectorAll('article').find((a) => a.querySelector('h3')!.text.trim() === title)!;
 
@@ -32,7 +32,7 @@ test('market research page: JMP first, publications, verbatim titles, partial ac
   expect(pub.querySelector('.paper-status')?.innerHTML).toBe('<em>Journal of Tests</em>, 2028');
   expect([pub.querySelector('summary'), pub.querySelector('.paper-actions--abstract')]).toEqual([null, null]);
   const wip = entry(d, titles(d, 'work-in-progress')[0]);
-  expect(wip.querySelector('.paper-meta')?.text.trim()).toBe('with Solène Coauthor, Second Coauthor, and Third Coauthor');
+  expect(visibleText(wip.querySelector('.paper-meta')!)).toBe('with Solène Coauthor, Second Coauthor, and Third Coauthor');
   expect([!!wip.querySelector('summary'), wip.querySelector('.paper-links')]).toEqual([true, null]);
 });
 

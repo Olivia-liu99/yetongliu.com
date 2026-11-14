@@ -24,6 +24,13 @@ export function html(s: Scenario, path: string): HTMLElement {
   return parse(read(s, path));
 }
 
+/** The text a sighted visitor sees: everything except the screen-reader-only (.visually-hidden) parts. */
+export function visibleText(el: HTMLElement): string {
+  const copy = parse(el.outerHTML);
+  for (const hidden of copy.querySelectorAll('.visually-hidden')) hidden.remove();
+  return copy.text.trim();
+}
+
 /** Paper titles inside the labeled section with this id. */
 export const titles = (d: HTMLElement, id: string) =>
   d.querySelectorAll(`section[aria-labelledby="${id}"] h3`).map((h) => h.text.trim());

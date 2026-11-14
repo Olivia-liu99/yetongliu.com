@@ -1,4 +1,6 @@
 ---
+import NewTabHint from './NewTabHint.astro';
+
 interface Props {
   current?: 'home' | 'research' | 'teaching';
   name: string;
@@ -43,7 +45,7 @@ const items: { label: string; href: string; key: string; newTab?: boolean }[] = 
                 target={item.newTab ? '_blank' : undefined}
               >
                 {item.label}
-                {item.newTab && <span class="visually-hidden"> (opens in a new tab)</span>}
+                {item.newTab && <NewTabHint />}
               </a>
             </li>
           ))

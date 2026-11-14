@@ -1,6 +1,8 @@
 ---
 // Email, CV, and profile links under the bio. Links that aren't set don't appear.
 // Every link except the email opens in a new tab, so visitors keep the site open.
+import NewTabHint from './NewTabHint.astro';
+
 interface Props {
   email: string;
   links: { scholar?: string; linkedin?: string; orcid?: string; ssrn?: string };
@@ -27,7 +29,7 @@ const items = candidates
     items.map((item) => (
       <a href={item.href} translate={item.translate} target={item.newTab ? '_blank' : undefined}>
         {item.label}
-        {item.newTab && <span class="visually-hidden"> (opens in a new tab)</span>}
+        {item.newTab && <NewTabHint />}
       </a>
     ))
   }

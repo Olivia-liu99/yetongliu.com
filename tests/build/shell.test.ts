@@ -53,6 +53,29 @@ test('on every page, only the top-bar CV link opens a new tab, and it tells scre
   }
 });
 
+test('links to files and other sites open a new tab and say so; links within the site and email links do not', () => {
+  // Opens in place: a page on this site ("/", "/research/"), a spot on the same page ("#main"), or an email address.
+  const opensInPlace = (href: string) => /^(mailto:|#)/.test(href) || /^\/([\w-]+\/)*$/.test(href);
+  // Not covered: links typed into Markdown text (the bio, abstracts, the Teaching page) keep the
+  // Markdown default and open in place. Covering them needs a Sätteri hast plugin.
+  const typedInText = '.bio a, .paper-abstract a, section[aria-labelledby="teaching"] a';
+  const wrong: string[] = [];
+  for (const s of ['default', 'market'] as const) {
+    for (const { path, root } of allHtml(s)) {
+      const skip = new Set(root.querySelectorAll(typedInText));
+      for (const a of root.querySelectorAll('a[href]')) {
+        if (skip.has(a)) continue;
+        const href = a.getAttribute('href')!;
+        const ok = opensInPlace(href)
+          ? a.getAttribute('target') == null && !a.text.includes('(opens in a new tab)')
+          : a.getAttribute('target') === '_blank' && a.text.trim().endsWith('(opens in a new tab)');
+        if (!ok) wrong.push(`${s}/${path}: ${href}`);
+      }
+    }
+  }
+  expect(wrong).toEqual([]);
+});
+
 test('no third-party resources and no client scripts', () => {
   for (const s of ['default', 'market'] as const) {
     for (const { path, root } of allHtml(s)) {

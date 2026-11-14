@@ -1,9 +1,8 @@
 import type { HTMLElement } from 'node-html-parser';
 import { expect, test } from 'vitest';
-import { allHtml, exists, html, labels, titles } from './helpers';
+import { allHtml, exists, html, labels, titles, visibleText } from './helpers';
 
 const section = (d: HTMLElement, id: string) => d.querySelector(`section[aria-labelledby="${id}"]`)!;
-const linkText = (a: HTMLElement) => a.text.replace(/ for “.*”$/, '').trim();
 
 test("Yetong's home page", () => {
   const d = html('default', 'index.html');
@@ -14,8 +13,8 @@ test("Yetong's home page", () => {
   expect(d.querySelector('.market-line')).toBeNull();
   expect(d.querySelector('picture img')?.getAttribute('alt')).toBe('Portrait of Yetong Liu');
   expect(d.querySelector('.bio')?.text).toContain('I study innovation and how organizations adopt new technologies.');
-  expect(d.querySelectorAll('.profile-links a').map(linkText))
-    .toEqual(['yetong.liu@mail.utoronto.ca', 'CV (opens in a new tab)', 'Google Scholar (opens in a new tab)', 'LinkedIn (opens in a new tab)']);
+  expect(d.querySelectorAll('.profile-links a').map(visibleText))
+    .toEqual(['yetong.liu@mail.utoronto.ca', 'CV', 'Google Scholar', 'LinkedIn']);
   expect(labels(d)).toEqual(['Research interests', 'Current research']);
   expect(section(d, 'research-interests').querySelector('.row-body')?.text.trim())
     .toBe('Innovation, technology diffusion and adoption, artificial intelligence');
@@ -44,16 +43,16 @@ test('market home page', () => {
   expect(labels(d)).toEqual(['Job market paper', 'Research interests', 'Other research', 'References']);
   const jmp = section(d, 'job-market-paper');
   expect(jmp.querySelector('.paper-summary')?.text.trim()).toBe('Fixture summary sentence.');
-  expect(jmp.querySelectorAll('.paper-links a').map((a) => [linkText(a), a.getAttribute('href')]))
+  expect(jmp.querySelectorAll('.paper-links a').map((a) => [visibleText(a), a.getAttribute('href')]))
     .toEqual([['Paper (PDF)', '/papers/fixture-jmp.pdf'], ['Slides', '/papers/fixture-jmp-slides.pdf']]);
   expect(titles(d, 'research-list')).not.toContain('Fixture JMP: Evidence from "Quoted" Markets');
   expect(section(d, 'references').querySelectorAll('li').map((li) =>
-    [li.querySelector('.reference-name')!.text.trim(), li.querySelector('.reference-role')!.text.trim()]))
+    [visibleText(li.querySelector('.reference-name')!), li.querySelector('.reference-role')!.text.trim()]))
     .toEqual([['Ada Reference', 'Professor, Example University'], ['Ben Reference', 'Associate Professor, Sample University']]);
   expect(d.querySelector('picture')).toBeNull();
   expect(d.querySelector('.intro--full')).toBeTruthy();
-  expect(d.querySelectorAll('.profile-links a').map(linkText))
-    .toEqual(['a.very.long.fixture.address.for.overflow.testing@example-university.edu', 'CV (opens in a new tab)', 'Google Scholar (opens in a new tab)']);
+  expect(d.querySelectorAll('.profile-links a').map(visibleText))
+    .toEqual(['a.very.long.fixture.address.for.overflow.testing@example-university.edu', 'CV', 'Google Scholar']);
   expect(d.querySelector('header [lang="zh"]')?.text.trim()).toBe('测试');
 });
 

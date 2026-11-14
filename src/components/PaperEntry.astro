@@ -3,6 +3,7 @@
 // the Research page, and "feature" spotlights the job market paper.
 import { render, type CollectionEntry } from 'astro:content';
 import { inlineEmphasis, listSeparator, paperLinks } from '../lib/format';
+import NewTabHint from './NewTabHint.astro';
 
 interface Props {
   paper: CollectionEntry<'papers'>;
@@ -26,7 +27,14 @@ const linkItems = showActions ? paperLinks(links, { pdfLabel: variant === 'featu
         with{' '}
         {coauthors.map((c, i) => (
           <>
-            {c.url ? <a class="coauthor" href={c.url}>{c.name}</a> : c.name}
+            {c.url ? (
+              <a class="coauthor" href={c.url} target="_blank">
+                {c.name}
+                <NewTabHint />
+              </a>
+            ) : (
+              c.name
+            )}
             {listSeparator(i, coauthors.length)}
           </>
         ))}
@@ -52,9 +60,10 @@ const linkItems = showActions ? paperLinks(links, { pdfLabel: variant === 'featu
         {linkItems.length > 0 && (
           <span class="paper-links">
             {linkItems.map((item) => (
-              <a href={item.href}>
+              <a href={item.href} target="_blank">
                 {item.label}
                 <span class="visually-hidden"> for “{title}”</span>
+                <NewTabHint />
               </a>
             ))}
           </span>
