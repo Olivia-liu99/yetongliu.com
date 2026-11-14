@@ -9,10 +9,11 @@ interface Props {
 
 const { current, name, nameChinese, hasCv, showTeaching } = Astro.props;
 
-const items = [
+// The CV opens in a new tab, so visitors keep the site open behind it.
+const items: { label: string; href: string; key: string; newTab?: boolean }[] = [
   { label: 'Research', href: '/research/', key: 'research' },
   ...(showTeaching ? [{ label: 'Teaching', href: '/teaching/', key: 'teaching' }] : []),
-  ...(hasCv ? [{ label: 'CV', href: '/cv.pdf', key: 'cv' }] : []),
+  ...(hasCv ? [{ label: 'CV', href: '/cv.pdf', key: 'cv', newTab: true }] : []),
 ];
 ---
 
@@ -36,8 +37,13 @@ const items = [
         {
           items.map((item) => (
             <li>
-              <a href={item.href} aria-current={item.key === current ? 'page' : undefined}>
+              <a
+                href={item.href}
+                aria-current={item.key === current ? 'page' : undefined}
+                target={item.newTab ? '_blank' : undefined}
+              >
                 {item.label}
+                {item.newTab && <span class="visually-hidden"> (opens in a new tab)</span>}
               </a>
             </li>
           ))
